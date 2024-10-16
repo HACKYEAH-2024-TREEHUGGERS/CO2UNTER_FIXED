@@ -1,4 +1,4 @@
-import { DataSource } from 'typeorm';
+import {DataSource} from 'typeorm';
 
 export const databaseProviders = [
   {
@@ -12,6 +12,9 @@ export const databaseProviders = [
         password: process.env.AZURE_POSTGRESQL_PASSWORD,
         database: process.env.AZURE_POSTGRESQL_DATABASE,
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+        ssl: {
+          rejectUnauthorized: process.env.AZURE_POSTGRESQL_SSL === 'true',
+        },
         synchronize: false,
       });
 
