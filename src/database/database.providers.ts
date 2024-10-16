@@ -12,7 +12,7 @@ export const databaseProviders = [
         password: process.env.AZURE_POSTGRESQL_PASSWORD,
         database: process.env.AZURE_POSTGRESQL_DATABASE,
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: false,
+        synchronize: true,
       });
 
       return dataSource.initialize();
