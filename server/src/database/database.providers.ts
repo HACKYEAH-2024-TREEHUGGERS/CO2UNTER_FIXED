@@ -7,7 +7,7 @@ export const databaseProviders = [
       const dataSource = new DataSource({
         type: 'postgres',
         host: process.env.PGHOST,
-        port: process.env.PGPORT,
+        port: parseInt(process.env.PGPORT, 10),
         username: process.env.PGUSER,
         password: process.env.PGPASSWORD,
         database: process.env.PGDATABASE,
