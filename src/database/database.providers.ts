@@ -1,4 +1,4 @@
-import {DataSource} from 'typeorm';
+import { DataSource } from 'typeorm';
 
 export const databaseProviders = [
   {
@@ -15,7 +15,7 @@ export const databaseProviders = [
         ssl: {
           rejectUnauthorized: process.env.AZURE_POSTGRESQL_SSL === 'true',
         },
-        synchronize: false,
+        synchronize: true,
       });
 
       return dataSource.initialize();
