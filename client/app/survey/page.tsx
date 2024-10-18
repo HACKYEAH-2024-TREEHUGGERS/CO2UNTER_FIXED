@@ -83,7 +83,7 @@ export default function SurveyPage() {
     return true;
   });
 
-  const hasNextQuestion = currentQuestionIndex < QUEUE.length - 1;
+  const hasNextQuestion = currentQuestionIndex < filteredQueue.length - 1;
   const hasPreviousQuestion = currentQuestionIndex > 0;
 
   const handleNext = () => {

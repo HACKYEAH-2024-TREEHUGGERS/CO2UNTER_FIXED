@@ -8,11 +8,35 @@ import { StatField } from '@/components/ui/stat-field';
 import { Field } from '@/components/ui/field';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { ky } from '@/api/ky';
+import { useUserStore } from '@/stores/user';
 
 export default function addTransportScreen() {
-  const { name, icon } = useLocalSearchParams();
+  const { name, icon, type } = useLocalSearchParams();
   const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
+  const { id } = useUserStore((state) => state.user);
+  const client = useQueryClient();
+
+  const addActivityMutation = useMutation({
+    mutationFn: async (amount: number) => {
+      await ky.post(`users/${id}/activities`, {
+        json: {
+          type: 'transport' as const,
+          activity: type,
+          amount,
+        },
+      });
+    },
+    onSuccess: async () => {
+      await client.invalidateQueries({
+        queryKey: ['dashboard'],
+        exact: false,
+      });
+
+      router.dismissAll();
+    },
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -59,12 +83,9 @@ export default function addTransportScreen() {
           suffix="km"
         />
         <Button
-          loading={loading}
+          loading={addActivityMutation.isPending}
           onPress={() => {
-            setLoading(true);
-            setTimeout(() => {
-              router.dismissAll();
-            }, 3000);
+            addActivityMutation.mutate(+input);
           }}
         >
           Dodaj

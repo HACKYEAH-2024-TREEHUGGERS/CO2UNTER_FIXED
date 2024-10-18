@@ -143,13 +143,15 @@ export const Summary = ({ dashboard }: Props) => {
                 color: Colors.light.neutral[900],
               }}
             >
-              {dashboard.summary}
+              {(dashboard.summary / 1000).toPrecision(2)}
               <Text style={{ fontSize: 24 }}>kg</Text>
             </Text>
             <Text>{label}</Text>
           </View>
           <PolarChart
-            data={DATA(colors.chart)}
+            data={DATA(colors.chart, {
+              percentage: Math.min(dashboard.summary / poland, 1),
+            })}
             labelKey={'label'}
             valueKey={'value'}
             colorKey={'color'}
@@ -209,9 +211,16 @@ export const Summary = ({ dashboard }: Props) => {
   );
 };
 
-const DATA = (color: string) => [
-  { value: 0.6, color, label: 'Label 1' },
-  { value: 0.4, color: Colors.light.neutral[50], label: 'Label 2' },
+const DATA = (
+  color: string,
+  {
+    percentage,
+  }: {
+    percentage: number;
+  }
+) => [
+  { value: percentage, color, label: 'Label 1' },
+  { value: 1 - percentage, color: Colors.light.neutral[50], label: 'Label 2' },
 ];
 
 function MyCustomSlice({ slice }: { slice: PieSliceData }) {

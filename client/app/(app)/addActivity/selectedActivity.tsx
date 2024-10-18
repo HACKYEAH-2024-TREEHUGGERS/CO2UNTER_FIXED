@@ -5,47 +5,92 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ListButton } from '@/components/list-button';
-import { Key } from 'react';
+
+const VehicleActivities = {
+  MOVE_BY_CAR: 'move_by_car',
+  MOVE_BY_ELECTRIC_CAR: 'move_by_electric_car',
+  MOVE_BY_MOTORBIKE: 'move_by_motorbike',
+  MOVE_BY_PUBLIC_TRANSPORT: 'move_by_public_transport',
+  MOVE_BY_BIKE: 'move_by_bike',
+  MOVE_BY_SCOOTER: 'move_by_scooter',
+  MOVE_BY_WALK: 'move_by_walk',
+} as const;
+
+type VehicleActivitiesType = keyof typeof VehicleActivities;
+type VehicleActivities = (typeof VehicleActivities)[VehicleActivitiesType];
 
 const ACTIVITY_OPTIONS: Record<
   string,
-  { options: { icon: string; name: string }[]; pathname: string }
+  {
+    options: { icon: string; name: string; type: VehicleActivities }[];
+    pathname: string;
+  }
 > = {
   Transport: {
     pathname: '/addActivity/addTransport',
     options: [
       {
+        name: 'Samochód',
         icon: 'directions-car',
-        name: 'Volvo V50',
+        type: 'move_by_car',
       },
-      { icon: 'electric-scooter', name: 'Hulajka Huberta' },
-    ],
-  },
-  Media: {
-    pathname: '/addActivity/addMedia',
-    options: [
       {
-        icon: 'bolt',
-        name: 'Sieć Elektryczna',
+        name: 'Samochód elektryczny',
+        icon: 'electric-car',
+        type: 'move_by_electric_car',
       },
-    ],
-  },
-  Usługi: {
-    pathname: '/addActivity/addService',
-    options: [
       {
-        icon: 'theaters',
-        name: 'Kino',
+        name: 'Motocykl',
+        icon: 'two-wheeler',
+        type: 'move_by_motorbike',
       },
-      { icon: 'tv', name: 'Streaming' },
-      { icon: 'memory', name: 'ChatGPT' },
-      { icon: 'bolt', name: 'Własne' },
+      {
+        name: 'Hulajnoga Elektryczna',
+        icon: 'electric-scooter',
+        type: 'move_by_electric_car',
+      },
+      {
+        name: 'Rower',
+        icon: 'pedal-bike',
+        type: 'move_by_bike',
+      },
+      {
+        name: 'Rower Elektryczny',
+        icon: 'electric-bike',
+        type: 'move_by_electric_car',
+      },
+      {
+        name: 'Komunikacja Miejska',
+        icon: 'directions-bus',
+        type: 'move_by_public_transport',
+      },
     ],
   },
-  Wydarzenie: {
-    pathname: '/addActivity/addEvent',
-    options: [{ icon: 'add', name: 'Dodaj Własne' }],
-  },
+  // Media: {
+  //   pathname: '/addActivity/addMedia',
+  //   options: [
+  //     {
+  //       icon: 'bolt',
+  //       name: 'Sieć Elektryczna',
+  //     },
+  //   ],
+  // },
+  // Usługi: {
+  //   pathname: '/addActivity/addService',
+  //   options: [
+  //     {
+  //       icon: 'theaters',
+  //       name: 'Kino',
+  //     },
+  //     { icon: 'tv', name: 'Streaming' },
+  //     { icon: 'memory', name: 'ChatGPT' },
+  //     { icon: 'bolt', name: 'Własne' },
+  //   ],
+  // },
+  // Wydarzenie: {
+  //   pathname: '/addActivity/addEvent',
+  //   options: [{ icon: 'add', name: 'Dodaj Własne' }],
+  // },
 };
 
 export default function SelectedActivityScreen() {

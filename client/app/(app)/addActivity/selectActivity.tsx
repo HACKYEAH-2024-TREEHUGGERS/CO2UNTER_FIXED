@@ -1,28 +1,28 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import { ListButton } from '@/components/list-button';
 import { Colors } from '@/constants/Colors';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { ListButton } from '@/components/list-button';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ACTIVITIES = [
   {
     name: 'Transport',
     icon: 'directions-car',
   },
-  {
-    name: 'Media',
-    icon: 'bolt',
-  },
-  {
-    name: 'Usługi',
-    icon: 'theaters',
-  },
-  {
-    name: 'Wydarzenie',
-    icon: 'confirmation-number',
-  },
+  // {
+  //   name: 'Media',
+  //   icon: 'bolt',
+  // },
+  // {
+  //   name: 'Usługi',
+  //   icon: 'theaters',
+  // },
+  // {
+  //   name: 'Wydarzenie',
+  //   icon: 'confirmation-number',
+  // },
 ] as const;
 
 export default function AddActivityScreen() {
